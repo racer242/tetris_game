@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'MOSCOW2024';
+  src: url(./fonts/MOSCOW2024.eot);
+  src: url(./fonts/MOSCOW2024.eot?#iefix) format('embedded-opentype'),
+       url(./fonts/MOSCOW2024.ttf) format('truetype'),
+       url(./fonts/MOSCOW2024.otf) format('otf'),
+       url(./fonts/MOSCOW2024.woff) format('woff'),
+       url(./fonts/MOSCOW2024.woff2) format('woff2');
+}

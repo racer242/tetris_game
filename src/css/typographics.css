@@ -1,0 +1,53 @@
+.game h1 {
+  font-family: "MOSCOW2024";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 96px;
+  line-height: 96px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.game h2 {
+  font-family: "MOSCOW2024";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 72px;
+  line-height: 72px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.game h3 {
+  font-family: "MOSCOW2024";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 84px;
+  line-height: 84px;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+.game p {
+  font-family: "MOSCOW2024";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 44px;
+  line-height: 44px;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+.game .final-score {
+  font-family: "MOSCOW2024";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 140px;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}

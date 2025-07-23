@@ -1,0 +1,167 @@
+.g1 .game-area {
+  position: absolute;
+  display: block;
+  left: 170px;
+  top: 375px;
+  width: 750px;
+  height: 1500px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.g1 .frame {
+  position: absolute;
+  display: block;
+  left: 140px;
+  top: 344px;
+  width: 810px;
+  height: 1563px;
+  background-image: url(../images/game1/frame.png);
+  background-size: 100% 100%;
+}
+.g1 .next-title-area {
+  position: absolute;
+  display: block;
+  left: 580px;
+  top: 290px;
+  width: 180px;
+  height: 54px;
+  color: #71c8ef;
+}
+
+.g1 .next-area {
+  position: absolute;
+  display: block;
+  left: 730px;
+  top: 200px;
+  width: 260px;
+  height: 200px;
+}
+
+.g1 .score-area {
+  position: absolute;
+  display: block;
+  left: 170px;
+  top: 255px;
+  width: 335px;
+  height: 105px;
+  color: #71c8ef;
+}
+
+.g1 .logo {
+  position: absolute;
+  display: block;
+  left: 66px;
+  top: 52px;
+  width: 889px;
+  height: 108px;
+  background-image: url(../images/game1/logo.png);
+}
+
+.g1 .pause-plate {
+  position: absolute;
+  display: block;
+  left: 355px;
+  top: 800px;
+  width: 380px;
+  height: 290px;
+  background-color: #fff;
+  border-radius: 30px;
+  color: #71c8ef;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+}
+
+.g1 .finish-area {
+  position: absolute;
+  display: block;
+  left: 170px;
+  top: 375px;
+  width: 750px;
+  height: 700px;
+
+  color: #71c8ef;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.g1 .block0,
+.g1 .block1,
+.g1 .block2,
+.g1 .block3,
+.g1 .block4,
+.g1 .block5,
+.g1 .block6 {
+  /* z-index: 1000; */
+  /* font-size: 10px;
+  line-height: 1em;
+  font-family: arial; */
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  padding: 1px;
+  /* border: 0.5px solid  #ffffff; */
+  /* with	margin 0.5px there were	problems with offsetLeft and offsetTop */
+}
+
+/*
+	|
+	---
+*/
+.g1 .block1 {
+  background: #32a4fa;
+}
+
+/*
+	  |
+	---
+*/
+.g1 .block0 {
+  background: #38c44f;
+}
+
+/*
+	--
+   --
+*/
+.g1 .block2 {
+  background: #ffac1c;
+}
+
+/*
+	--
+	 --
+*/
+.g1 .block3 {
+  background: #ff6600;
+}
+
+/*
+	|
+   ---
+*/
+.g1 .block4 {
+  background: #cc54c4;
+}
+
+/*
+	--
+	--
+*/
+.g1 .block5 {
+  background: #999;
+}
+
+/*
+	----
+*/
+.g1 .block6 {
+  background: #ff0000;
+}

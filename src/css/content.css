@@ -1,0 +1,147 @@
+.finishPage,
+.mainPage {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  color: #fff;
+  padding: 0px 0px;
+  gap: 10px;
+}
+
+.mobile .finishPage,
+.mobile .mainPage {
+  justify-content: space-evenly;
+}
+
+.pageOverlay,
+.pageBg,
+.contentBox,
+.videoBox {
+  position: absolute;
+  background-position: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.head {
+  position: relative;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+}
+
+.mainPage .head {
+  height: 10%;
+  background-color: #070739;
+}
+
+.mainPage .head h1 {
+  position: relative;
+}
+
+.contentBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.plate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 36px;
+  gap: 10px;
+  background: #089de2;
+  border-radius: 20px;
+  gap: 20px;
+  width: calc(100% - 280px);
+  min-width: 480px;
+  box-sizing: border-box;
+}
+
+.score-box {
+  position: relative;
+  display: flex;
+  width: 388px;
+  height: 240px;
+  flex-direction: column;
+
+  align-content: start;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.score-plate {
+  position: relative;
+  display: flex;
+  width: 388px;
+  flex-direction: column;
+
+  align-content: start;
+  align-items: center;
+  gap: 10px;
+  padding-top: 16px;
+  padding-bottom: 90px;
+  background: #ff49b8;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.score-pie {
+  position: absolute;
+  top: 100px;
+  display: flex;
+  width: 140px;
+  min-height: 140px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+
+  background: #ffd100;
+  color: #ff49b8;
+  border-radius: 70px;
+  box-sizing: border-box;
+}
+
+.white {
+  color: #fff;
+}
+
+.black {
+  color: #222221;
+}
+
+.orange {
+  color: #f8d1b9;
+}
+
+.yellow {
+  color: #ffd100;
+}
+
+.pink {
+  color: #ff49b8;
+}
+
+.g1 .pageBg {
+  background-color: #070739;
+  background-image: url(../images/game1/bg.png);
+}
