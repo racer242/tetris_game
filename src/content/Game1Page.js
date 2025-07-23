@@ -35,7 +35,10 @@ class Game1Page extends GamePage {
     this.score_updateHandler = this.score_updateHandler.bind(this);
     this.gameOverHandler = this.gameOverHandler.bind(this);
 
-    this.input = new Input();
+    this.input = new Input({
+      startDelay: this.state.gameData.startDelay,
+      stepDelay: this.state.gameData.stepDelay,
+    });
   }
 
   destroy() {
@@ -58,28 +61,32 @@ class Game1Page extends GamePage {
       this.state.gameData.leftButton,
       () => {
         this.tetris.left();
-      }
+      },
+      true
     );
     this.input.registerAction(
       this.state.gameData.rightKey,
       this.state.gameData.rightButton,
       () => {
         this.tetris.right();
-      }
+      },
+      true
     );
     this.input.registerAction(
       this.state.gameData.rotateKey,
       this.state.gameData.rotateButton,
       () => {
         this.tetris.up();
-      }
+      },
+      true
     );
     this.input.registerAction(
       this.state.gameData.downKey,
       this.state.gameData.downButton,
       () => {
         this.tetris.down();
-      }
+      },
+      true
     );
     this.input.registerAction(
       this.state.gameData.dropKey,

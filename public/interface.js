@@ -75,6 +75,9 @@ function onAppReadyHandler(app) {
 
         restartTimeout: 15000,
 
+        startDelay: 100,
+        stepDelay: 10,
+
         nextScreenKey: "Space",
         nextScreenButton: "button0",
 

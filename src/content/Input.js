@@ -5,7 +5,10 @@ import {
 } from "../utils/gamepadTools";
 
 class Input {
-  constructor() {
+  constructor(props) {
+    this.startDelay = props?.startDelay ?? 100;
+    this.stepDelay = props?.stepDelay ?? 20;
+
     this.keyHandler = this.keyHandler.bind(this);
     this.keys = {};
     this.buttons = {};
@@ -55,13 +58,13 @@ class Input {
     this.keys[key] = action;
   }
 
-  registerButton(button, action) {
-    this.buttons[button] = { action, start: 0, step: 0 };
+  registerButton(button, action, cycling) {
+    this.buttons[button] = { action, start: 0, step: 0, cycling };
   }
 
-  registerAction(key, button, action) {
+  registerAction(key, button, action, cycling) {
     this.keys[key] = action;
-    this.buttons[button] = { action, start: 0, step: 0 };
+    this.buttons[button] = { action, start: 0, step: 0, cycling };
   }
 
   keyHandler(event) {
@@ -88,16 +91,17 @@ class Input {
     if (this.buttons[button])
       switch (event) {
         case "pressed":
-          if (this.buttons[button].start > 100) {
-            if (this.buttons[button].step > 20) {
-              if (this.buttons[button].action) this.buttons[button].action();
-              this.buttons[button].step = 0;
+          if (this.buttons[button].cycling)
+            if (this.buttons[button].start > this.startDelay) {
+              if (this.buttons[button].step > this.stepDelay) {
+                if (this.buttons[button].action) this.buttons[button].action();
+                this.buttons[button].step = 0;
+              } else {
+                this.buttons[button].step++;
+              }
             } else {
-              this.buttons[button].step++;
+              this.buttons[button].start++;
             }
-          } else {
-            this.buttons[button].start++;
-          }
           break;
 
         case "down":
