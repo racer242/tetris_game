@@ -69,13 +69,9 @@ class Main1Page extends Component {
         >
           <source src={this.state.game1.videoSource.src} type="video/mp4" />
         </video>
-        <div className="head appear-zoom">
-          <h2>Градостроительный комплекс Москвы</h2>
-        </div>
-        <div className="contentBox">
-          <div className="plate appear-top delay500ms">
-            <h1>Начать игру</h1>
-          </div>
+        <div className="logo"></div>
+        <div className="message-plate">
+          <h1>Начать игру</h1>
         </div>
       </div>
     );

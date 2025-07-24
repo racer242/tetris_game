@@ -3,13 +3,15 @@ class Area {
    * Area consists of blocks (2 dimensional board).
    * Block contains "0" (if empty) or Html Object.
    */
-  constructor(unit, x, y, gameAreaContainer) {
+  constructor(unit, x, y, gameAreaContainer, fullLines_clearedHandler) {
     this.unit = unit;
     this.x = x;
     this.y = y;
     this.el = gameAreaContainer;
 
     this.board = [];
+
+    this.fullLines_clearedHandler = fullLines_clearedHandler;
 
     // create 2-dimensional board
     for (var y = 0; y < this.y; y++) {
@@ -34,12 +36,27 @@ class Area {
     }
   }
 
+  getFullLines() {
+    let lines = [];
+    for (var y = this.y - 1; y > 0; y--) {
+      if (this.isLineFull(y)) {
+        lines.push(y);
+      }
+    }
+    return lines;
+  }
+
   /**
    * Searching for full lines.
    * Must go from the bottom of area to the top.
    * Returns the number of lines removed - needed for Stats.score.
    */
   removeFullLines() {
+    let fullLines = this.getFullLines();
+    if (fullLines.length === 0) return;
+
+    this.fullLines_clearedHandler(fullLines);
+
     var lines = 0;
     for (var y = this.y - 1; y > 0; y--) {
       if (this.isLineFull(y)) {

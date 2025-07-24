@@ -68,7 +68,6 @@ class Input {
   }
 
   keyHandler(event) {
-    console.log(event.code);
     if (this.keys[event.code]) this.keys[event.code]();
   }
 

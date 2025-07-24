@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Game1Page from "../content/Game1Page";
 import Main1Page from "../content/Main1Page";
-import Finish1Page from "../content/Finish1Page";
 import TestPad from "../content/TestPad";
 
 class PageStack extends Component {
@@ -54,9 +53,6 @@ class PageStack extends Component {
 
         {this.state.currentPage === "game" && this.state.gameIndex == 1 && (
           <Game1Page bounds={this.props.bounds} store={this.store} />
-        )}
-        {this.state.currentPage === "finish" && (
-          <Finish1Page bounds={this.props.bounds} store={this.store} />
         )}
       </div>
     );

@@ -11,28 +11,6 @@
 // передается ниже в конфигурацию, сама на приложение не влияет
 window.gameId = "TETRIS";
 
-// Просто переменная - используется внутри этого файла для удобства,
-// передается ниже в конфигурацию, сама на приложение не влияет
-window.userAuthorized = false; //true; false;
-
-// Также функция для использования внутри этого файла, заглушка
-// Имитирует закрытие попапа с игрой
-window.closeGamePopup = function () {
-  console.log("closeGamePopup");
-};
-
-// Также функция для использования внутри этого файла, заглушка
-// Имитирует переход к регистрации чека
-window.registerBill = function () {
-  console.log("registerBill");
-};
-
-// Также функция для использования внутри этого файла, заглушка
-// Имитирует переход к регистрации пользователя
-window.signUp = function () {
-  console.log("signUp");
-};
-
 // Функция инициализации приложения. Вызывается из обработчика в Index.html,
 // см. <div id="root" class="game" oninit="onAppReadyHandler">
 function onAppReadyHandler(app) {
@@ -67,23 +45,50 @@ function onAppReadyHandler(app) {
   var data = {
     // Это список настроек для обмена данными игр
     games: {
-      // id - для передачи кода игры
-      // request1 - запрос до старта
-      // request2 - запрос после старта
       1: {
         id: "TETRIS",
 
+        // Задержка до авто-рестарта игры на экране финальных очков
         restartTimeout: 15000,
 
-        startDelay: 100,
-        stepDelay: 10,
+        // Настройки задержек джойстика принцип работы:
+        // down:GO -> press*startDelay:(press*stepDelay:GO) -> up:RESET
+        startDelay: 10,
+        stepDelay: 0,
 
+        // Настроки скорости игры по формуле:
+        // speed = base + level / getLevel()
+        speed: {
+          base: 80, //80,
+          level: 1000, //700,
+        },
+
+        // Настройки начисления очков за призовые ситуации
+        score: {
+          // Заполнены линии. За одну линию. Формула:
+          // score = getScore() + fullLine * getLevel() * lines
+          fullLine: 100, //1000,
+          // Принудительно опущена фигура. За одну линию. Формула:
+          // score = getScore() + moveDown + getLevel()
+          moveDown: 1, //5,
+        },
+
+        // Настройки увеличения уровня игры. Рассчитываются по формуле:
+        // getPuzzles() >= minPuzzles + this.tetris.stats.getLevel() * levelFactor
+        level: {
+          puzzles: 20, //10,
+          factor: 2, //2,
+        },
+
+        // Клавиша или кнопка для старта игры
         nextScreenKey: "Space",
         nextScreenButton: "button0",
 
+        // Клавиша или кнопка для перехода на тестовый экран
         testScreenKey: "KeyT",
         testScreenButton: "button1",
 
+        // Клавиши или кнопки управления игрой
         leftKey: "ArrowLeft",
         leftButton: "button0",
         rightKey: "ArrowRight",
@@ -99,48 +104,20 @@ function onAppReadyHandler(app) {
         pauseKey: "KeyP",
         pauseButton: "r1",
 
-        // buttons: {
-        //   button0: "",
-        //   button1: "",
-        //   button2: "",
-        //   button3: "",
-        //   button4: "",
-        //   button5: "",
-        //   button6: "",
-        //   button7: "",
-        //   button8: "",
-        //   button9: "",
-        //   button10: "",
-        //   button11: "",
-        //   button12: "",
-        //   button13: "",
-        //   button14: "",
-        //   button15: "",
-        //   button16: "",
-        //   up0: "",
-        //   down0: "",
-        //   right0: "",
-        //   left0: "",
-        //   up1: "",
-        //   down1: "",
-        //   right1: "",
-        //   left1: "",
-        //   start: "",
-        //   select: "",
-        //   power: "",
-        //   l1: "",
-        //   l2: "",
-        //   r1: "",
-        //   r2: "",
-        //   up: "",
-        //   down: "",
-        //   right: "",
-        //   left: "",
-        // },
+        //Возможные кнопки джойстика:
+        // button0, button1, button2, button3, button4,
+        // button5, button6, button7, button8, button9,
+        // button10, button11, button12, button13, button14,
+        // button15, button16, up0, down0, right0, left0,
+        // up1, down1, right1, left1, start, select, power,
+        // l1, l2, r1, r2, up, down, right, left,
       },
+
       // Это индекс игр для быстрой идентификации внутри приложения
       index: { TETRIS: 1 },
     },
+
+    //Переключение на мобильную верстку при ширине:
     switchToMobileWidth: 1080,
   };
 

@@ -4,6 +4,7 @@ import GamePage from "./GamePage";
 import Tetris from "./Tetris";
 import Input from "./Input";
 import { setStoreData } from "../actions/appActions";
+import LineCollapse from "./LineCollapse";
 
 class Game1Page extends GamePage {
   constructor(props) {
@@ -14,27 +15,42 @@ class Game1Page extends GamePage {
       nextPuzzleType: -1,
       isPaused: false,
       gameOver: false,
+      isStarting: true,
+      collapses: [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      ],
     };
 
     this.state = {
       ...this.state,
-      objects: [],
-      bonuses: [],
-      // gameDuration: this.state.game1.gameDuration,
-      // stopDuration: this.state.game1.stopDuration,
-      // stepDuration: this.state.game1.stepDuration,
       stats: this.stats,
-      // score: 0,
-      // nextPuzzleType: 0,
-      // isPaused: false,
-      // gameOver: false,
     };
     this.gameAreaRef = React.createRef();
 
     this.nextPuzzle_updateHandler = this.nextPuzzle_updateHandler.bind(this);
     this.score_updateHandler = this.score_updateHandler.bind(this);
     this.gameOverHandler = this.gameOverHandler.bind(this);
-
+    this.fullLines_clearedHandler = this.fullLines_clearedHandler.bind(this);
+    this.lineCollapse_endHandler = this.lineCollapse_endHandler.bind(this);
     this.input = new Input({
       startDelay: this.state.gameData.startDelay,
       stepDelay: this.state.gameData.stepDelay,
@@ -45,6 +61,10 @@ class Game1Page extends GamePage {
     this.stopGame();
     this.input.destroy();
     clearTimeout(this.restartTimeout);
+    clearTimeout(this.startTimeout);
+    clearTimeout(this.startHideTimeout);
+    clearTimeout(this.startCountdownTimeout);
+
     this.tetris.reset();
   }
 
@@ -60,6 +80,8 @@ class Game1Page extends GamePage {
       this.state.gameData.leftKey,
       this.state.gameData.leftButton,
       () => {
+        if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
+          return;
         this.tetris.left();
       },
       true
@@ -68,6 +90,8 @@ class Game1Page extends GamePage {
       this.state.gameData.rightKey,
       this.state.gameData.rightButton,
       () => {
+        if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
+          return;
         this.tetris.right();
       },
       true
@@ -76,14 +100,17 @@ class Game1Page extends GamePage {
       this.state.gameData.rotateKey,
       this.state.gameData.rotateButton,
       () => {
+        if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
+          return;
         this.tetris.up();
-      },
-      true
+      }
     );
     this.input.registerAction(
       this.state.gameData.downKey,
       this.state.gameData.downButton,
       () => {
+        if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
+          return;
         this.tetris.down();
       },
       true
@@ -92,6 +119,8 @@ class Game1Page extends GamePage {
       this.state.gameData.dropKey,
       this.state.gameData.dropButton,
       () => {
+        if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
+          return;
         this.tetris.space();
       }
     );
@@ -109,31 +138,25 @@ class Game1Page extends GamePage {
           return;
         }
 
-        this.stats = {
-          ...this.stats,
-          score: 0,
-          nextPuzzleType: -1,
-          isPaused: false,
-          gameOver: false,
-        };
-        this.updateState();
-        this.tetris.start();
+        if (this.stats.isStarting || this.stats.isPaused) return;
+
+        this.start();
       }
     );
     this.input.registerAction(
       this.state.gameData.pauseKey,
       this.state.gameData.pauseButton,
       () => {
-        if (!this.stats.gameOver)
-          if (this.stats.isPaused) {
-            this.tetris.resume();
-            this.stats = { ...this.stats, isPaused: false };
-            this.updateState();
-          } else {
-            this.tetris.pause();
-            this.stats = { ...this.stats, isPaused: true };
-            this.updateState();
-          }
+        if (this.stats.gameOver || this.stats.isStarting) return;
+        if (this.stats.isPaused) {
+          this.tetris.resume();
+          this.stats = { ...this.stats, isPaused: false };
+          this.updateState();
+        } else {
+          this.tetris.pause();
+          this.stats = { ...this.stats, isPaused: true };
+          this.updateState();
+        }
       }
     );
 
@@ -141,21 +164,92 @@ class Game1Page extends GamePage {
       this.gameAreaRef.current,
       this.nextPuzzle_updateHandler,
       this.score_updateHandler,
-      this.gameOverHandler
+      this.fullLines_clearedHandler,
+      this.gameOverHandler,
+      {
+        score: this.state.gameData.score,
+        speed: this.state.gameData.speed,
+        level: this.state.gameData.level,
+      }
     );
 
-    this.tetris.start();
+    this.start();
     return true;
+  }
+
+  start() {
+    this.startTimeout = setTimeout(() => {
+      this.stats = { ...this.stats, isStarting: true };
+      this.updateState();
+
+      this.startHideTimeout = setTimeout(() => {
+        this.stats = {
+          ...this.stats,
+          score: 0,
+          nextPuzzleType: -1,
+          isPaused: false,
+          gameOver: false,
+          collapses: [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+          ],
+        };
+        this.updateState();
+        this.tetris.reset();
+      }, 1000);
+      this.startCountdownTimeout = setTimeout(() => {
+        this.tetris.start();
+        this.stats = { ...this.stats, isStarting: false };
+        this.updateState();
+      }, 3000);
+    }, 100);
   }
 
   nextPuzzle_updateHandler(nextPuzzleType) {
     this.stats = { ...this.stats, nextPuzzleType };
     this.updateState();
   }
+
   score_updateHandler(score) {
     this.stats = { ...this.stats, score };
     this.updateState();
   }
+
+  lineCollapse_endHandler(n) {
+    let collapses = this.state.stats.collapses;
+    collapses[n] = null;
+    this.stats = { ...this.stats, collapses };
+    this.updateState();
+  }
+
+  fullLines_clearedHandler(lines) {
+    let collapses = this.state.stats.collapses;
+    for (let i = 0; i < lines.length; i++) {
+      let n = lines[i];
+      collapses[n] = new LineCollapse(n, 1000, this.lineCollapse_endHandler);
+    }
+    this.stats = { ...this.stats, collapses };
+    this.updateState();
+  }
+
   gameOverHandler(gameOver) {
     this.stats = { ...this.stats, gameOver };
     this.updateState();
@@ -178,11 +272,67 @@ class Game1Page extends GamePage {
         <div className="gameScene">
           <div className="pageBg"></div>
           <div className="logo"></div>
-          {!this.state.stats.gameOver && (
-            <>
-              <div className="frame"></div>
-              <div className="game-area" ref={this.gameAreaRef}></div>
 
+          <div
+            className="game-container"
+            style={{ opacity: this.state.stats.gameOver ? 0 : 1 }}
+          >
+            <div className="frame"></div>
+            <div className="game-area-bg">
+              <div
+                className="game-area-columns"
+                style={{ opacity: this.state.stats.isStarting ? 0 : 1 }}
+              >
+                <div
+                  className="game-area-column lights"
+                  style={{ left: 0 * 100, animationDelay: "0ms" }}
+                ></div>
+                <div
+                  className="game-area-column lights"
+                  style={{ left: 75 * 2, animationDelay: "1000ms" }}
+                ></div>
+                <div
+                  className="game-area-column lights"
+                  style={{ left: 75 * 4, animationDelay: "2000ms" }}
+                ></div>
+                <div
+                  className="game-area-column lights"
+                  style={{ left: 75 * 6, animationDelay: "3000ms" }}
+                ></div>
+                <div
+                  className="game-area-column lights"
+                  style={{ left: 75 * 8, animationDelay: "4000ms" }}
+                ></div>
+              </div>
+            </div>
+            <div
+              className="game-area"
+              ref={this.gameAreaRef}
+              style={{ opacity: this.state.stats.isStarting ? 0 : 1 }}
+            ></div>
+
+            <div className="clear-area">
+              {this.state.stats.collapses.reduce((a, v, i) => {
+                console.log("??", v);
+                if (v)
+                  a.push(
+                    <div
+                      key={`clear${i}`}
+                      className="clear-line"
+                      style={{ top: i * 75 }}
+                    >
+                      <div className="clear-line-bg explode"></div>
+                      <div className="clear-line-glow collapse"></div>
+                    </div>
+                  );
+                return a;
+              }, [])}
+            </div>
+
+            <div
+              className="top-area"
+              style={{ opacity: this.state.stats.isStarting ? 0 : 1 }}
+            >
               <div className="score-area">
                 <h3>{this.state.stats.score}</h3>
               </div>
@@ -203,36 +353,61 @@ class Game1Page extends GamePage {
                   ></div>
                 </>
               )}
-            </>
-          )}
+            </div>
+          </div>
+
           {this.state.stats.isPaused && (
             <div className="pause-plate">
               <h1>Пауза</h1>
             </div>
           )}
-          {this.state.stats.gameOver && (
-            <div className="finish-area">
-              <h2>ИТОГОВЫЙ СЧЕТ:</h2>
-              <div
-                className="final-score"
-                style={{
-                  fontSize:
-                    this.state.stats.score < 1000
-                      ? 320
-                      : this.state.stats.score < 10000
-                      ? 240
-                      : this.state.stats.score < 100000
-                      ? 200
-                      : this.state.stats.score < 1000000
-                      ? 165
-                      : 120,
-                }}
-              >
-                {this.state.stats.score}
-              </div>
+
+          <div
+            className="finish-area"
+            style={{ opacity: this.state.stats.gameOver ? 1 : 0 }}
+          >
+            <h2>ИТОГОВЫЙ СЧЕТ:</h2>
+            <div
+              className="final-score"
+              style={{
+                fontSize:
+                  this.state.stats.score < 1000
+                    ? 320
+                    : this.state.stats.score < 10000
+                    ? 240
+                    : this.state.stats.score < 100000
+                    ? 200
+                    : this.state.stats.score < 1000000
+                    ? 165
+                    : 120,
+              }}
+            >
+              {this.state.stats.score}
             </div>
-          )}
+          </div>
         </div>
+        {this.state.stats.isStarting && (
+          <>
+            <div
+              className="start-countdown-area appear-countdown-1"
+              style={{ animationDelay: "0ms" }}
+            >
+              <div className="start-countdown">3...</div>
+            </div>
+            <div
+              className="start-countdown-area appear-countdown-1"
+              style={{ animationDelay: "1000ms" }}
+            >
+              <div className="start-countdown">2...</div>
+            </div>
+            <div
+              className="start-countdown-area appear-countdown-1"
+              style={{ animationDelay: "2000ms" }}
+            >
+              <div className="start-countdown">1...</div>
+            </div>
+          </>
+        )}
       </div>
     );
   }

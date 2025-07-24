@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: normal;
   font-size: 96px;
-  line-height: 96px;
+  line-height: 108px;
   text-align: center;
   padding: 0;
   margin: 0;
@@ -42,7 +42,17 @@
   margin: 0;
 }
 
-.game .final-score {
+.g1 .final-score {
+  font-family: "MOSCOW2024";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 140px;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+.g1 .start-countdown {
   font-family: "MOSCOW2024";
   font-style: normal;
   font-weight: normal;

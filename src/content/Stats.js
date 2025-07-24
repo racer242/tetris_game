@@ -10,16 +10,7 @@ class Stats {
 
     this.stats_changeHandler = stats_changeHandler;
 
-    // this.el = {
-    //   level: document.getElementById("tetris-stats-level"),
-    //   time: document.getElementById("tetris-stats-time"),
-    //   apm: document.getElementById("tetris-stats-apm"),
-    //   lines: document.getElementById("tetris-stats-lines"),
-    //   score: document.getElementById("tetris-stats-score"),
-    // };
-
     this.timerId = null;
-    // var self = this;
 
     this.incTime = this.incTime.bind(this);
   }
@@ -54,12 +45,6 @@ class Stats {
     this.puzzles = 0;
     this.actions = 0;
 
-    // this.el.level.innerHTML = this.level;
-    // this.el.time.innerHTML = this.time;
-    // this.el.apm.innerHTML = this.apm;
-    // this.el.lines.innerHTML = this.lines;
-    // this.el.score.innerHTML = this.score;
-
     this.stats_changeHandler(this);
   }
 
@@ -69,9 +54,7 @@ class Stats {
    */
   incTime() {
     this.time++;
-    // self.el.time.innerHTML = self.time;
     this.apm = parseInt((this.actions / this.time) * 60);
-    // self.el.apm.innerHTML = self.apm;
     this.stats_changeHandler(this);
   }
 
@@ -80,8 +63,8 @@ class Stats {
    */
   setScore(i) {
     this.score = i;
-    // this.el.score.innerHTML = this.score;
     this.stats_changeHandler(this);
+    console.log("score changed:", this.score);
   }
 
   /**
@@ -89,8 +72,8 @@ class Stats {
    */
   setLevel(i) {
     this.level = i;
-    // this.el.level.innerHTML = this.level;
     this.stats_changeHandler(this);
+    console.log("level changed:", this.level);
   }
 
   /**
@@ -98,8 +81,8 @@ class Stats {
    */
   setLines(i) {
     this.lines = i;
-    // this.el.lines.innerHTML = this.lines;
     this.stats_changeHandler(this);
+    console.log("lines filled:", this.lines);
   }
 
   /**
@@ -107,6 +90,7 @@ class Stats {
    */
   setPuzzles(i) {
     this.puzzles = i;
+    console.log("puzzles created:", this.puzzles);
   }
 
   /**

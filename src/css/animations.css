@@ -1,3 +1,114 @@
+.appear-countdown-1 {
+  animation: appear-countdown 1000ms ease-in-out;
+  opacity: 0;
+  will-change: contents;
+}
+@keyframes appear-countdown {
+  0% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+}
+
+.lights {
+  animation: lights 5000ms ease-out infinite;
+  opacity: 0.1;
+}
+@keyframes lights {
+  0% {
+    opacity: 0.4;
+  }
+  20% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.explode {
+  animation: explode 1000ms ease-out;
+  opacity: 0;
+}
+@keyframes explode {
+  0% {
+    opacity: 1;
+    transform: scaleY(0);
+  }
+  25% {
+    opacity: 0.5;
+    transform: scaleY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(4);
+  }
+}
+
+.collapse {
+  animation: collapse 500ms ease-in;
+  opacity: 0;
+}
+@keyframes collapse {
+  0% {
+    opacity: 0.7;
+    transform: translateY(0px) scaleY(1);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(38px) scaleY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(38px) scaleY(0);
+  }
+}
+
+.blinking {
+  animation: blinking 500ms ease-out infinite;
+}
+@keyframes blinking {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .spin {
   -webkit-animation: spin 4s linear infinite;
   -moz-animation: spin 4s linear infinite;
@@ -85,33 +196,6 @@
   }
   100% {
     opacity: 1;
-  }
-}
-
-.blinking {
-  animation: blinking 1000ms ease-out;
-}
-@keyframes blinking {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  20% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
-  }
-  60% {
-    opacity: 0;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
   }
 }
 
@@ -374,48 +458,6 @@
   }
   100% {
     transform: scaleY(1);
-  }
-}
-
-.lights {
-  animation: lights 4000ms ease-out infinite;
-}
-@keyframes lights {
-  0% {
-    opacity: 1;
-  }
-  45% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  95% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.lights-even {
-  animation: lights-even 4000ms ease-out infinite;
-}
-@keyframes lights-even {
-  0% {
-    opacity: 0;
-  }
-  45% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  95% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
   }
 }
 

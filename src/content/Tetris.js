@@ -7,7 +7,9 @@ class Tetris {
     gameAreaContainer,
     nextPuzzle_updateHandler,
     score_updateHandler,
-    gameOverHandler
+    fullLines_clearedHandler,
+    gameOverHandler,
+    params
   ) {
     this.puzzle = null;
     this.area = null;
@@ -15,11 +17,17 @@ class Tetris {
     this.areaX = 10; // area width = x units
     this.areaY = 20; // area height = y units
     this.paused = false;
+    this.params = params;
+
+    this.speedParams = params?.speed ?? { base: 80, level: 700 };
+    this.scoreParams = params?.score ?? { fullLine: 1000, moveDown: 5 };
 
     this.gameAreaContainer = gameAreaContainer;
     this.nextPuzzle_updateHandler = nextPuzzle_updateHandler;
     this.score_updateHandler = score_updateHandler;
     this.gameOverHandler = gameOverHandler;
+
+    this.fullLines_clearedHandler = fullLines_clearedHandler;
 
     this.nextPuzzle_changeHandler = this.nextPuzzle_changeHandler.bind(this);
     this.stats_changeHandler = this.stats_changeHandler.bind(this);
@@ -43,9 +51,15 @@ class Tetris {
       this.unit,
       this.areaX,
       this.areaY,
-      this.gameAreaContainer
+      this.gameAreaContainer,
+      this.fullLines_clearedHandler
     );
-    this.puzzle = new Puzzle(this, this.area, this.nextPuzzle_changeHandler);
+    this.puzzle = new Puzzle(
+      this,
+      this.area,
+      this.nextPuzzle_changeHandler,
+      this.params
+    );
     if (this.puzzle.mayPlace()) {
       this.puzzle.place();
       this.gameOverHandler(false);
@@ -125,7 +139,12 @@ class Tetris {
   down() {
     if (this.puzzle && this.puzzle.isRunning() && !this.puzzle.isStopped()) {
       if (this.puzzle.mayMoveDown()) {
-        this.stats.setScore(this.stats.getScore() + 5 + this.stats.getLevel());
+        // this.stats.setScore(this.stats.getScore() + 5 + this.stats.getLevel());
+        this.stats.setScore(
+          this.stats.getScore() +
+            this.scoreParams.moveDown +
+            this.stats.getLevel()
+        );
         this.puzzle.moveDown();
         this.stats.setActions(this.stats.getActions() + 1);
       }

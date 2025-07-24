@@ -1,3 +1,11 @@
+.g1 .game-container {
+  position: absolute;
+  display: block;
+  left: 0px;
+  top: 0px;
+  transition: opacity 1000ms;
+}
+
 .g1 .game-area {
   position: absolute;
   display: block;
@@ -5,7 +13,68 @@
   top: 375px;
   width: 750px;
   height: 1500px;
+  transition: opacity 1000ms;
+}
+
+.g1 .game-area-bg {
+  position: absolute;
+  display: block;
+  left: 170px;
+  top: 375px;
+  width: 750px;
+  height: 1500px;
   background-color: rgba(0, 0, 0, 0.7);
+}
+.g1 .game-area-columns {
+  position: absolute;
+  display: block;
+  opacity: 0;
+  transition: opacity 1000ms;
+}
+.g1 .game-area-column {
+  position: absolute;
+  display: block;
+  left: 0px;
+  top: 0px;
+  width: 75px;
+  height: 1500px;
+  background-color: rgba(113, 200, 239, 0.1);
+}
+
+.g1 .clear-area {
+  position: absolute;
+  display: block;
+  left: 170px;
+  top: 375px;
+}
+.g1 .clear-line {
+  position: absolute;
+  display: block;
+  left: 0px;
+  top: 0px;
+  width: 750px;
+  height: 75px;
+}
+
+.g1 .clear-line-bg {
+  position: absolute;
+  display: block;
+  left: 0px;
+  top: 38px;
+  width: 750px;
+  height: 75px;
+  background-image: url(../images/game1/row-glow.png);
+  background-size: 100% 100%;
+}
+
+.g1 .clear-line-glow {
+  position: absolute;
+  display: block;
+  left: 0px;
+  top: 0px;
+  width: 750px;
+  height: 75px;
+  background-color: #fff;
 }
 
 .g1 .frame {
@@ -18,21 +87,30 @@
   background-image: url(../images/game1/frame.png);
   background-size: 100% 100%;
 }
+
+.g1 .top-area {
+  position: absolute;
+  display: block;
+  left: 170px;
+  top: 200px;
+  opacity: 0;
+  transition: opacity 1000ms;
+}
 .g1 .next-title-area {
   position: absolute;
   display: block;
-  left: 580px;
-  top: 290px;
+  left: 410px;
+  top: 90px;
   width: 180px;
   height: 54px;
-  color: #71c8ef;
+  color: #00caf1;
 }
 
 .g1 .next-area {
   position: absolute;
   display: block;
-  left: 730px;
-  top: 200px;
+  left: 550px;
+  top: 0px;
   width: 260px;
   height: 200px;
 }
@@ -40,21 +118,11 @@
 .g1 .score-area {
   position: absolute;
   display: block;
-  left: 170px;
-  top: 255px;
+  left: 0px;
+  top: 55px;
   width: 335px;
   height: 105px;
-  color: #71c8ef;
-}
-
-.g1 .logo {
-  position: absolute;
-  display: block;
-  left: 66px;
-  top: 52px;
-  width: 889px;
-  height: 108px;
-  background-image: url(../images/game1/logo.png);
+  color: #00caf1;
 }
 
 .g1 .pause-plate {
@@ -66,30 +134,52 @@
   height: 290px;
   background-color: #fff;
   border-radius: 30px;
-  color: #71c8ef;
+  color: #00caf1;
 
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   gap: 0px;
+
+  box-shadow: 0px 0px 58px 7px #01caf1;
 }
 
 .g1 .finish-area {
   position: absolute;
   display: block;
   left: 170px;
-  top: 375px;
+  top: 285px;
   width: 750px;
   height: 700px;
 
-  color: #71c8ef;
+  color: #00caf1;
 
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   gap: 40px;
+
+  opacity: 0;
+  transition: opacity 1000ms;
+}
+
+.g1 .start-countdown-area {
+  position: absolute;
+  display: block;
+  left: 170px;
+  top: 375px;
+  width: 750px;
+  height: 1500px;
+
+  color: #00caf1;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
 }
 
 .g1 .block0,
@@ -112,19 +202,19 @@
 }
 
 /*
-	|
-	---
-*/
-.g1 .block1 {
-  background: #32a4fa;
-}
-
-/*
 	  |
 	---
 */
 .g1 .block0 {
-  background: #38c44f;
+  background-image: url(../images/game1/b0.png);
+}
+
+/*
+	|
+	---
+*/
+.g1 .block1 {
+  background-image: url(../images/game1/b1.png);
 }
 
 /*
@@ -132,7 +222,7 @@
    --
 */
 .g1 .block2 {
-  background: #ffac1c;
+  background-image: url(../images/game1/b2.png);
 }
 
 /*
@@ -140,7 +230,7 @@
 	 --
 */
 .g1 .block3 {
-  background: #ff6600;
+  background-image: url(../images/game1/b3.png);
 }
 
 /*
@@ -148,7 +238,7 @@
    ---
 */
 .g1 .block4 {
-  background: #cc54c4;
+  background-image: url(../images/game1/b4.png);
 }
 
 /*
@@ -156,12 +246,12 @@
 	--
 */
 .g1 .block5 {
-  background: #999;
+  background-image: url(../images/game1/b5.png);
 }
 
 /*
 	----
 */
 .g1 .block6 {
-  background: #ff0000;
+  background-image: url(../images/game1/b6.png);
 }

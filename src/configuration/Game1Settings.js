@@ -19,16 +19,6 @@ const Game1Settings = {
     require("../images/game1/puzzle5.png"),
     require("../images/game1/puzzle6.png"),
   ],
-
-  newCount: 2,
-  gridSize: 10,
-  transitionDuration: 1000, //ms
-
-  bonusLife: 3,
-
-  stepDuration: 1000, //ms
-  gameDuration: -1, //s
-  stopDuration: 2000, //ms
 };
 
 export default Game1Settings;

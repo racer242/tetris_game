@@ -3,8 +3,12 @@ class Puzzle {
    * Puzzle consists of blocks.
    * Each puzzle after rotating 4 times, returns to its primitive position.
    */
-  constructor(tetris, area, nextPuzzle_changeHandler) {
+  constructor(tetris, area, nextPuzzle_changeHandler, params) {
     this.nextPuzzle_changeHandler = nextPuzzle_changeHandler;
+
+    this.speedParams = params?.speed ?? { base: 80, level: 700 };
+    this.scoreParams = params?.score ?? { fullLine: 1000, moveDown: 5 };
+    this.levelParams = params?.level ?? { puzzles: 10, factor: 2 };
 
     this.tetris = tetris;
     this.area = area;
@@ -94,18 +98,15 @@ class Puzzle {
     this.type = this.nextType;
     this.nextType = this.random(this.puzzles.length);
     this.position = 0;
-    this.speed = 80 + 700 / this.tetris.stats.getLevel();
+    // this.speed = 80 + 700 / this.tetris.stats.getLevel();
+    this.speed =
+      this.speedParams.base +
+      this.speedParams.level / this.tetris.stats.getLevel();
     this.running = false;
     this.stopped = false;
     this.board = [];
     this.elements = [];
 
-    // !!! Очистка поля Next Puzzle
-    // for (var i = 0; i < this.nextElements.length; i++) {
-    //   document
-    //     .getElementById("tetris-nextpuzzle")
-    //     .removeChild(this.nextElements[i]);
-    // }
     this.nextElements = [];
     this.x = null;
     this.y = null;
@@ -182,8 +183,11 @@ class Puzzle {
     // stats
     this.tetris.stats.setPuzzles(this.tetris.stats.getPuzzles() + 1);
     if (
+      // this.tetris.stats.getPuzzles() >=
+      // 10 + this.tetris.stats.getLevel() * 2
       this.tetris.stats.getPuzzles() >=
-      10 + this.tetris.stats.getLevel() * 2
+      this.levelParams.puzzles +
+        this.tetris.stats.getLevel() * this.levelParams.factor
     ) {
       this.tetris.stats.setLevel(this.tetris.stats.getLevel() + 1);
       this.tetris.stats.setPuzzles(0);
@@ -198,7 +202,6 @@ class Puzzle {
     this.y = 1;
     this.board = this.createEmptyPuzzle(puzzle.length, puzzle[0].length);
     // create puzzle
-    // !!!Создается пазл
     for (var y = puzzle.length - 1; y >= 0; y--) {
       for (var x = 0; x < puzzle[y].length; x++) {
         if (puzzle[y][x]) {
@@ -230,8 +233,7 @@ class Puzzle {
           el.className = "block" + this.nextType;
           el.style.left = x * this.area.unit + "px";
           el.style.top = y * this.area.unit + "px";
-          // !!! добавление пазла в поле next puzzle
-          // document.getElementById("tetris-nextpuzzle").appendChild(el);
+          // добавление пазла в поле next puzzle
           this.nextElements.push(el);
         }
       }
@@ -283,8 +285,10 @@ class Puzzle {
         if (lines) {
           this.tetris.stats.setLines(this.tetris.stats.getLines() + lines);
           this.tetris.stats.setScore(
+            // this.tetris.stats.getScore() +
+            //   1000 * this.tetris.stats.getLevel() * lines
             this.tetris.stats.getScore() +
-              1000 * this.tetris.stats.getLevel() * lines
+              this.scoreParams.fullLine * this.tetris.stats.getLevel() * lines
           );
         }
         // reset puzzle
@@ -308,7 +312,10 @@ class Puzzle {
       if (this.mayMoveDown()) {
         // stats: score, actions
         this.tetris.stats.setScore(
-          this.tetris.stats.getScore() + 5 + this.tetris.stats.getLevel()
+          // this.tetris.stats.getScore() + 5 + this.tetris.stats.getLevel()
+          this.tetris.stats.getScore() +
+            this.scoreParams.moveDown +
+            this.tetris.stats.getLevel()
         );
         this.tetris.stats.setActions(this.tetris.stats.getActions() + 1);
         this.moveDown();
@@ -323,8 +330,10 @@ class Puzzle {
         if (lines) {
           this.tetris.stats.setLines(this.tetris.stats.getLines() + lines);
           this.tetris.stats.setScore(
+            // this.tetris.stats.getScore() +
+            //   1000 * this.tetris.stats.getLevel() * lines
             this.tetris.stats.getScore() +
-              1000 * this.tetris.stats.getLevel() * lines
+              this.scoreParams.fullLine * this.tetris.stats.getLevel() * lines
           );
         }
         // reset puzzle
