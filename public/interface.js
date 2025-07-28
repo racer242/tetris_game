@@ -48,6 +48,38 @@ function onAppReadyHandler(app) {
       1: {
         id: "TETRIS",
 
+        // Показывать видео-заставку - с настройкой параметров или null
+        videoCover: {
+          blur: 10,
+          opacity: 0.6,
+        },
+
+        // Настройка звуковых эффектов
+        sound: {
+          clear: { volume: 0.6 },
+          countdown: {},
+          down: { volume: 0.4 },
+          gameover: {},
+          move: { volume: 0.4 },
+          music: { volume: 0.3 },
+          pause: {},
+          place: { volume: 0.4 },
+          rotate: { volume: 0.2 },
+          title: { volume: 0.3 },
+        },
+
+        // Общая настройка звука
+        soundParameters: {
+          volume: 0.5,
+        },
+
+        // Использовать фоновую анимацию в принципе
+        animation: true,
+        // Показывать анимацию на главном скрине
+        animationonMainScreen: true,
+        // Показывать анимацию на игровом скрине
+        animationOnGameScreen: true,
+
         // Задержка до авто-рестарта игры на экране финальных очков
         restartTimeout: 15000,
 

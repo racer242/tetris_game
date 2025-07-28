@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { setStoreData } from "../actions/appActions";
 import Input from "./Input";
 
-// import { ReactComponent as MINUS } from "../images/game1/minus.svg";
-
 class Main1Page extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +11,7 @@ class Main1Page extends Component {
         ...this.store.getState(),
       };
     } else this.state = {};
+    this.soundControl = props.soundControl;
   }
 
   componentDidMount() {
@@ -28,6 +27,7 @@ class Main1Page extends Component {
               currentPage: "game",
             })
           );
+          this.soundControl.globalStop();
           this.destroy();
         }
       );
@@ -43,12 +43,19 @@ class Main1Page extends Component {
           this.destroy();
         }
       );
+      this.soundControl.play("title");
     }
     this.mounted = true;
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+    this.destroy();
+  }
+
   destroy() {
     this.input.destroy();
+    this.soundControl.globalStop();
   }
 
   render() {
@@ -57,19 +64,46 @@ class Main1Page extends Component {
 
     return (
       <div className="mainPage g1">
-        <div className="pageBg"></div>
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          width="1080"
-          height="1920"
-          className="videoBox"
-        >
-          <source src={this.state.game1.videoSource.src} type="video/mp4" />
-        </video>
-        <div className="logo"></div>
+        {this.state.gameData.videoCover && (
+          <div
+            className="contentBox"
+            style={{
+              ...(this.state.gameData.videoCover.blur
+                ? {
+                    filter:
+                      "blur(" + this.state.gameData.videoCover.blur + "px)",
+                  }
+                : {}),
+              opacity: this.state.gameData.videoCover.opacity ?? 1,
+            }}
+          >
+            <div className="frame"></div>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="videoBox"
+              onAbort={() => {
+                console.log("Aborted");
+              }}
+              onPause={() => {
+                console.log("Paused");
+              }}
+              onStalled={() => {
+                console.log("Stalled");
+              }}
+              onSuspend={() => {
+                console.log("Suspend");
+              }}
+              onWaiting={() => {
+                console.log("Waiting");
+              }}
+            >
+              <source src={this.state.game1.videoSource.src} type="video/mp4" />
+            </video>
+          </div>
+        )}
         <div className="message-plate">
           <h1>Начать игру</h1>
         </div>

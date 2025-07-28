@@ -43,6 +43,24 @@
   background-image: url(../images/game1/bg.png);
 }
 
+.videoBox {
+  left: 170px;
+  top: 375px;
+  width: 750px;
+  height: 1500px;
+}
+
+.frame {
+  position: absolute;
+  display: block;
+  left: 140px;
+  top: 344px;
+  width: 810px;
+  height: 1563px;
+  background-image: url(../images/game1/frame.png);
+  background-size: 100% 100%;
+}
+
 .message-plate {
   position: absolute;
   display: block;

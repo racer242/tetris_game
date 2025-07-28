@@ -9,6 +9,7 @@ class Tetris {
     score_updateHandler,
     fullLines_clearedHandler,
     gameOverHandler,
+    placeHandler,
     params
   ) {
     this.puzzle = null;
@@ -26,6 +27,7 @@ class Tetris {
     this.nextPuzzle_updateHandler = nextPuzzle_updateHandler;
     this.score_updateHandler = score_updateHandler;
     this.gameOverHandler = gameOverHandler;
+    this.placeHandler = placeHandler;
 
     this.fullLines_clearedHandler = fullLines_clearedHandler;
 
@@ -58,6 +60,7 @@ class Tetris {
       this,
       this.area,
       this.nextPuzzle_changeHandler,
+      this.placeHandler,
       this.params
     );
     if (this.puzzle.mayPlace()) {
@@ -130,6 +133,7 @@ class Tetris {
       if (this.puzzle.mayRotate()) {
         this.puzzle.rotate();
         this.stats.setActions(this.stats.getActions() + 1);
+        return true;
       }
     }
   }
@@ -147,6 +151,7 @@ class Tetris {
         );
         this.puzzle.moveDown();
         this.stats.setActions(this.stats.getActions() + 1);
+        return true;
       }
     }
   }
@@ -158,6 +163,7 @@ class Tetris {
       if (this.puzzle.mayMoveLeft()) {
         this.puzzle.moveLeft();
         this.stats.setActions(this.stats.getActions() + 1);
+        return true;
       }
     }
   }
@@ -169,6 +175,7 @@ class Tetris {
       if (this.puzzle.mayMoveRight()) {
         this.puzzle.moveRight();
         this.stats.setActions(this.stats.getActions() + 1);
+        return true;
       }
     }
   }

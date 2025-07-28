@@ -10,8 +10,9 @@ class GamePage extends Component {
       };
     } else this.state = {};
 
-    this.ref = React.createRef();
+    this.soundControl = props.soundControl;
 
+    this.ref = React.createRef();
     this.state = {
       ...this.state,
     };
@@ -30,7 +31,10 @@ class GamePage extends Component {
       this.unsubscribe();
     }
     this.mounted = false;
+    this.destroy();
   }
+
+  destroy() {}
 
   componentDidUpdate(prevProps, prevState, snapshot) {}
 

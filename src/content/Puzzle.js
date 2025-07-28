@@ -3,8 +3,9 @@ class Puzzle {
    * Puzzle consists of blocks.
    * Each puzzle after rotating 4 times, returns to its primitive position.
    */
-  constructor(tetris, area, nextPuzzle_changeHandler, params) {
+  constructor(tetris, area, nextPuzzle_changeHandler, placeHandler, params) {
     this.nextPuzzle_changeHandler = nextPuzzle_changeHandler;
+    this.placeHandler = placeHandler;
 
     this.speedParams = params?.speed ?? { base: 80, level: 700 };
     this.scoreParams = params?.score ?? { fullLine: 1000, moveDown: 5 };
@@ -276,6 +277,7 @@ class Puzzle {
         this.moveDown();
         this.fallDownID = setTimeout(this.fallDown, this.speed);
       } else {
+        this.placeHandler();
         // move blocks into area board
         for (var i = 0; i < this.elements.length; i++) {
           this.area.addElement(this.elements[i]);
@@ -321,6 +323,7 @@ class Puzzle {
         this.moveDown();
         this.forceMoveDownID = setTimeout(this.forceMoveDown, 30);
       } else {
+        this.placeHandler();
         // move blocks into area board
         for (var i = 0; i < this.elements.length; i++) {
           this.area.addElement(this.elements[i]);

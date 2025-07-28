@@ -47,6 +47,7 @@ class Game1Page extends GamePage {
     this.gameAreaRef = React.createRef();
 
     this.nextPuzzle_updateHandler = this.nextPuzzle_updateHandler.bind(this);
+    this.placeHandler = this.placeHandler.bind(this);
     this.score_updateHandler = this.score_updateHandler.bind(this);
     this.gameOverHandler = this.gameOverHandler.bind(this);
     this.fullLines_clearedHandler = this.fullLines_clearedHandler.bind(this);
@@ -82,7 +83,7 @@ class Game1Page extends GamePage {
       () => {
         if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
           return;
-        this.tetris.left();
+        if (this.tetris.left()) this.soundControl.play("move");
       },
       true
     );
@@ -92,7 +93,7 @@ class Game1Page extends GamePage {
       () => {
         if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
           return;
-        this.tetris.right();
+        if (this.tetris.right()) this.soundControl.play("move");
       },
       true
     );
@@ -102,7 +103,7 @@ class Game1Page extends GamePage {
       () => {
         if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
           return;
-        this.tetris.up();
+        if (this.tetris.up()) this.soundControl.play("rotate");
       }
     );
     this.input.registerAction(
@@ -111,7 +112,7 @@ class Game1Page extends GamePage {
       () => {
         if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
           return;
-        this.tetris.down();
+        if (this.tetris.down()) this.soundControl.play("down");
       },
       true
     );
@@ -122,12 +123,15 @@ class Game1Page extends GamePage {
         if (this.stats.gameOver || this.stats.isStarting || this.stats.isPaused)
           return;
         this.tetris.space();
+        this.soundControl.play("down");
       }
     );
     this.input.registerAction(
       this.state.gameData.resetKey,
       this.state.gameData.resetButton,
       () => {
+        if (this.stats.isStarting || this.stats.isPaused) return;
+        this.soundControl.globalStop();
         if (this.stats.gameOver) {
           this.store.dispatch(
             setStoreData({
@@ -152,11 +156,14 @@ class Game1Page extends GamePage {
           this.tetris.resume();
           this.stats = { ...this.stats, isPaused: false };
           this.updateState();
+          this.soundControl.play("music");
         } else {
           this.tetris.pause();
           this.stats = { ...this.stats, isPaused: true };
           this.updateState();
+          this.soundControl.globalStop();
         }
+        this.soundControl.play("pause");
       }
     );
 
@@ -166,6 +173,7 @@ class Game1Page extends GamePage {
       this.score_updateHandler,
       this.fullLines_clearedHandler,
       this.gameOverHandler,
+      this.placeHandler,
       {
         score: this.state.gameData.score,
         speed: this.state.gameData.speed,
@@ -181,6 +189,8 @@ class Game1Page extends GamePage {
     this.startTimeout = setTimeout(() => {
       this.stats = { ...this.stats, isStarting: true };
       this.updateState();
+
+      this.soundControl.play("countdown");
 
       this.startHideTimeout = setTimeout(() => {
         this.stats = {
@@ -217,6 +227,7 @@ class Game1Page extends GamePage {
       }, 1000);
       this.startCountdownTimeout = setTimeout(() => {
         this.tetris.start();
+        this.soundControl.play("music");
         this.stats = { ...this.stats, isStarting: false };
         this.updateState();
       }, 3000);
@@ -226,6 +237,10 @@ class Game1Page extends GamePage {
   nextPuzzle_updateHandler(nextPuzzleType) {
     this.stats = { ...this.stats, nextPuzzleType };
     this.updateState();
+  }
+
+  placeHandler() {
+    this.soundControl.play("place");
   }
 
   score_updateHandler(score) {
@@ -248,6 +263,7 @@ class Game1Page extends GamePage {
     }
     this.stats = { ...this.stats, collapses };
     this.updateState();
+    this.soundControl.play("clear");
   }
 
   gameOverHandler(gameOver) {
@@ -255,6 +271,8 @@ class Game1Page extends GamePage {
     this.updateState();
 
     if (gameOver) {
+      this.soundControl.globalStop();
+      this.soundControl.play("gameover");
       this.restartTimeout = setTimeout(() => {
         this.store.dispatch(
           setStoreData({
@@ -270,9 +288,6 @@ class Game1Page extends GamePage {
     return (
       <div className="gamePage g1">
         <div className="gameScene">
-          <div className="pageBg"></div>
-          <div className="logo"></div>
-
           <div
             className="game-container"
             style={{ opacity: this.state.stats.gameOver ? 0 : 1 }}
@@ -313,7 +328,6 @@ class Game1Page extends GamePage {
 
             <div className="clear-area">
               {this.state.stats.collapses.reduce((a, v, i) => {
-                console.log("??", v);
                 if (v)
                   a.push(
                     <div

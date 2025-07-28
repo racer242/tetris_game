@@ -75,17 +75,8 @@
   width: 750px;
   height: 75px;
   background-color: #fff;
-}
-
-.g1 .frame {
-  position: absolute;
-  display: block;
-  left: 140px;
-  top: 344px;
-  width: 810px;
-  height: 1563px;
-  background-image: url(../images/game1/frame.png);
-  background-size: 100% 100%;
+  /* background-color: #01caf1;
+  mix-blend-mode: color-dodge; */
 }
 
 .g1 .top-area {
