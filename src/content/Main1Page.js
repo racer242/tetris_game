@@ -64,49 +64,65 @@ class Main1Page extends Component {
 
     return (
       <div className="mainPage g1">
-        {this.state.gameData.videoCover && (
-          <div
-            className="contentBox"
-            style={{
-              ...(this.state.gameData.videoCover.blur
-                ? {
-                    filter:
-                      "blur(" + this.state.gameData.videoCover.blur + "px)",
-                  }
-                : {}),
-              opacity: this.state.gameData.videoCover.opacity ?? 1,
-            }}
-          >
-            <div className="frame"></div>
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="videoBox"
-              onAbort={() => {
-                console.log("Aborted");
-              }}
-              onPause={() => {
-                console.log("Paused");
-              }}
-              onStalled={() => {
-                console.log("Stalled");
-              }}
-              onSuspend={() => {
-                console.log("Suspend");
-              }}
-              onWaiting={() => {
-                console.log("Waiting");
-              }}
-            >
-              <source src={this.state.game1.videoSource.src} type="video/mp4" />
-            </video>
-          </div>
+        {this.state.gameData?.videoIntro?.show && (
+          <video autoPlay loop muted playsInline className="videoIntro">
+            <source
+              src={this.state.gameData?.videoIntro?.src}
+              type="video/mp4"
+            />
+          </video>
         )}
-        <div className="message-plate">
-          <h1>Начать игру</h1>
-        </div>
+
+        {!this.state.gameData?.videoIntro?.show && (
+          <>
+            {this.state.gameData?.videoCover?.show && (
+              <div
+                className="contentBox"
+                style={{
+                  ...(this.state.gameData.videoCover.blur
+                    ? {
+                        filter:
+                          "blur(" + this.state.gameData.videoCover.blur + "px)",
+                      }
+                    : {}),
+                  opacity: this.state.gameData.videoCover.opacity ?? 1,
+                }}
+              >
+                <div className="frame"></div>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="videoBox"
+                  onAbort={() => {
+                    console.log("Aborted");
+                  }}
+                  onPause={() => {
+                    console.log("Paused");
+                  }}
+                  onStalled={() => {
+                    console.log("Stalled");
+                  }}
+                  onSuspend={() => {
+                    console.log("Suspend");
+                  }}
+                  onWaiting={() => {
+                    console.log("Waiting");
+                  }}
+                >
+                  <source
+                    src={this.state.game1.videoSource.src}
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
+            )}
+            <div className="message-plate">
+              <h1>Начать игру</h1>
+            </div>
+          </>
+        )}
       </div>
     );
   }

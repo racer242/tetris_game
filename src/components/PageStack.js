@@ -70,7 +70,7 @@ class PageStack extends Component {
               display: animation ? "block" : "none",
             }}
           >
-            <div className="mainPage">
+            <div className="animate">
               <Animate></Animate>
             </div>
           </div>

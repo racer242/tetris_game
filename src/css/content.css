@@ -18,7 +18,9 @@
 .pageOverlay,
 .pageBg,
 .contentBox,
-.videoBox {
+.videoBox,
+.videoIntro,
+.animate {
   position: absolute;
   background-position: center;
   left: 0;
@@ -48,6 +50,9 @@
   top: 375px;
   width: 750px;
   height: 1500px;
+}
+
+.animate {
 }
 
 .frame {

@@ -48,8 +48,15 @@ function onAppReadyHandler(app) {
       1: {
         id: "TETRIS",
 
+        // Показывать вместо заставки видео-ролик
+        videoIntro: {
+          show: true,
+          src: "./video/intro.mp4",
+        },
+
         // Показывать видео-заставку - с настройкой параметров или null
         videoCover: {
+          show: false,
           blur: 10,
           opacity: 0.6,
         },
@@ -76,7 +83,7 @@ function onAppReadyHandler(app) {
         // Использовать фоновую анимацию в принципе
         animation: true,
         // Показывать анимацию на главном скрине
-        animationonMainScreen: true,
+        animationonMainScreen: false,
         // Показывать анимацию на игровом скрине
         animationOnGameScreen: true,
 
