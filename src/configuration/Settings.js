@@ -2,7 +2,9 @@ import { isMobile, isLocal } from "../core/helpers";
 
 const settings = {
   assetsUrl: ".",
-  localStoreName: "appState_120225",
+  localStoreName: "appState_020825",
+
+  restartCount: 0,
 
   isMobile: isMobile(),
   isLocal: isLocal(),

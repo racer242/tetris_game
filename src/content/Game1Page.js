@@ -74,8 +74,6 @@ class Game1Page extends GamePage {
   }
 
   doStart() {
-    console.log("START");
-
     this.input.start();
     this.input.registerAction(
       this.state.gameData.leftKey,
@@ -136,6 +134,7 @@ class Game1Page extends GamePage {
           this.store.dispatch(
             setStoreData({
               currentPage: "main",
+              reset: true,
             })
           );
           this.destroy();
@@ -277,6 +276,7 @@ class Game1Page extends GamePage {
         this.store.dispatch(
           setStoreData({
             currentPage: "main",
+            reset: true,
           })
         );
         this.destroy();

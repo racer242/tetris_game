@@ -35,7 +35,7 @@ class SoundControl {
       let sound = {
         sources: sources[key],
         params: {
-          autoplay: true,
+          autoplay: false,
           ...(settings[key] ?? {}),
           ...(this.props[key] ?? {}),
         },
@@ -63,8 +63,8 @@ class SoundControl {
           let variant = variants[i];
           let param = sounds[key];
           if (param) {
-            if (param.volume) variant.volume(params.volume);
-            if (param.loop) variant.volume(params.loop);
+            if (param.volume) variant.volume(param.volume);
+            if (param.loop) variant.volume(param.loop);
           }
         }
       }

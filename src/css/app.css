@@ -34,6 +34,7 @@
   display: block;
   left: 0px;
   top: 0px;
+  background-color: #070739;
 }
 
 @media (max-width: 720px) {

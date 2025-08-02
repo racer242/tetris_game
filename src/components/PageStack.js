@@ -12,6 +12,7 @@ class PageStack extends Component {
     if (this.store) {
       this.state = {
         ...this.store.getState(),
+        isOpen: false,
       };
     } else this.state = { currentPage: "main" };
     this.soundControl = new SoundControl({});
@@ -21,6 +22,15 @@ class PageStack extends Component {
     this.unsubscribe = this.store.subscribe(() => {
       this.onStoreChange();
     });
+
+    if (!this.mounted) {
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          isOpen: true,
+        });
+      }, 1500);
+    }
     this.mounted = true;
   }
 
@@ -52,12 +62,15 @@ class PageStack extends Component {
     let animation =
       this.state.gameData?.animation &&
       ((this.state.currentPage === "main" &&
-        this.state.gameData?.animationonMainScreen) ||
+        this.state.gameData?.animationOnMainScreen) ||
         (this.state.currentPage === "game" &&
           this.state.gameData?.animationOnGameScreen));
 
     return (
-      <div className="pageContainer">
+      <div
+        className="pageContainer"
+        style={{ opacity: this.state.isOpen ? 1 : 0 }}
+      >
         {!animation && <div className="pageBg"></div>}
         {!animation && <div className="logo"></div>}
 
@@ -87,6 +100,8 @@ class PageStack extends Component {
         {this.state.currentPage === "test-pad" && (
           <TestPad bounds={this.props.bounds} store={this.store} />
         )}
+
+        {this.state.currentPage === "empty" && <div />}
 
         {this.state.currentPage === "game" && this.state.gameIndex == 1 && (
           <Game1Page

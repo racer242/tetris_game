@@ -24,8 +24,8 @@ class Input {
   start() {
     window.addEventListener("keydown", this.keyHandler);
 
-    console.log("init isReady", gameControl.isReady);
-    console.log("init getGamepads", gameControl.getGamepads());
+    // console.log("init isReady", gameControl.isReady);
+    // console.log("init getGamepads", gameControl.getGamepads());
     if (gameControl.isReady) {
       let gamepad = null;
       let gamepadsObj = gameControl.getGamepads();
@@ -104,7 +104,6 @@ class Input {
           break;
 
         case "down":
-          console.log("event", button, event);
           this.buttons[button].start = 0;
           this.buttons[button].step = 0;
           if (this.buttons[button].action) this.buttons[button].action();

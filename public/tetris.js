@@ -1305,13 +1305,13 @@ p.nominalBounds = new cjs.Rectangle(-109.2,-404.8,218.5,809.7);
 
 	// logo
 	this.instance_21 = new lib.logo_blinking();
-	this.instance_21.setTransform(317,128);
+	this.instance_21.setTransform(398,106);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_21).wait(201));
 
 	// m_2030_png
 	this.instance_22 = new lib.moscow2030_blinking();
-	this.instance_22.setTransform(859.5,121);
+	this.instance_22.setTransform(843,106.3);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_22).wait(201));
 
@@ -1345,19 +1345,19 @@ p.nominalBounds = new cjs.Rectangle(-109.2,-404.8,218.5,809.7);
 	this._renderFirstFrame();
 
 }).prototype = p = new cjs.MovieClip();
-p.nominalBounds = new cjs.Rectangle(-739.4,960,3107.4,1320.6999999999998);
+p.nominalBounds = new cjs.Rectangle(-739.4,938,3107.4,1342.6999999999998);
 // library properties:
 lib.properties = {
 	id: '525A79C96AEB704BAC76449C6A0D0980',
 	width: 1080,
 	height: 1920,
 	fps: 30,
-	color: "#FFFFFF",
+	color: "#070739",
 	opacity: 1.00,
 	manifest: [
-		{src:"images/buildings.png?1753519399833", id:"buildings"},
-		{src:"images/logo.png?1753519399833", id:"logo"},
-		{src:"images/tower.png?1753519399833", id:"tower"}
+		{src:"images/buildings.png", id:"buildings"},
+		{src:"images/logo.png", id:"logo"},
+		{src:"images/tower.png", id:"tower"}
 	],
 	preloads: []
 };

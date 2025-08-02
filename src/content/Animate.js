@@ -23,7 +23,7 @@ import { AnimateCC } from "react-adobe-animate";
 
 const Animate = () => {
   return (
-    <div style={{ width: "1080px" }}>
+    <div style={{ width: "1080px", background: "#070739" }}>
       <AnimateCC animationName="tetris" />
     </div>
   );

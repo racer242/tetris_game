@@ -64,7 +64,7 @@ class Stats {
   setScore(i) {
     this.score = i;
     this.stats_changeHandler(this);
-    console.log("score changed:", this.score);
+    // console.log("score changed:", this.score);
   }
 
   /**
@@ -73,7 +73,7 @@ class Stats {
   setLevel(i) {
     this.level = i;
     this.stats_changeHandler(this);
-    console.log("level changed:", this.level);
+    // console.log("level changed:", this.level);
   }
 
   /**
@@ -82,7 +82,7 @@ class Stats {
   setLines(i) {
     this.lines = i;
     this.stats_changeHandler(this);
-    console.log("lines filled:", this.lines);
+    // console.log("lines filled:", this.lines);
   }
 
   /**
@@ -90,7 +90,7 @@ class Stats {
    */
   setPuzzles(i) {
     this.puzzles = i;
-    console.log("puzzles created:", this.puzzles);
+    // console.log("puzzles created:", this.puzzles);
   }
 
   /**

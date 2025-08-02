@@ -5,6 +5,8 @@
   top: 0;
   bottom: 0;
   right: 0;
+  background-color: #070739;
+  transition: opacity 2s;
 }
 
 #Popup {
@@ -23,7 +25,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: #03001b;
+  background-color: #070739;
   border-radius: 30px;
   width: calc(90vw - 40px);
   max-height: 80vh;
@@ -80,20 +82,7 @@
 }
 
 #Preloader.g1 {
-  background: linear-gradient(180deg, #9d1fe1 0%, #5d279e 100%);
-}
-
-#Preloader.g2 {
-  background-color: #1d083f;
-}
-#Preloader.g3 {
-  background: linear-gradient(0deg, #242527 0.06%, #373944 100%);
-}
-#Preloader.g4 {
-  background: linear-gradient(180deg, #52bae0 0%, #b7e8fd 100%);
-}
-#Preloader.g5 {
-  background-color: #a20006;
+  background: linear-gradient(180deg, #0b0b52 0%, #070739 100%);
 }
 
 .preloader-display {
@@ -108,28 +97,8 @@
 }
 
 .preloader-display.g1 {
-  border: #5d279e 17px solid;
-  border-left-color: #ffd100;
-}
-
-.preloader-display.g2 {
-  border: #5d279e 17px solid;
-  border-left-color: #ffd100;
-}
-
-.preloader-display.g3 {
-  border: #5d279e 17px solid;
-  border-left-color: #a0e0fc;
-}
-
-.preloader-display.g4 {
-  border: #5d279e 17px solid;
-  border-left-color: #a0e0fc;
-}
-
-.preloader-display.g5 {
-  border: #d00007 17px solid;
-  border-left-color: #10cfc9;
+  border: #862dfa 17px solid;
+  border-left-color: #01caf1;
 }
 
 .preload-spin {

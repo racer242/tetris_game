@@ -33,9 +33,9 @@
 .logo {
   position: absolute;
   display: block;
-  left: 66px;
+  left: 150px;
   top: 52px;
-  width: 889px;
+  width: 790px;
   height: 108px;
   background-image: url(../images/game1/logo.png);
 }

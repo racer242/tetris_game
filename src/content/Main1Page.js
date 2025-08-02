@@ -61,15 +61,17 @@ class Main1Page extends Component {
   render() {
     let children = [];
     children.push(this.props.children);
-
     return (
       <div className="mainPage g1">
         {this.state.gameData?.videoIntro?.show && (
-          <video autoPlay loop muted playsInline className="videoIntro">
-            <source
-              src={this.state.gameData?.videoIntro?.src}
-              type="video/mp4"
-            />
+          <video
+            autoPlay
+            loop
+            muted={this.state.gameData?.videoIntro?.muted ?? false}
+            playsInline
+            className="videoIntro"
+          >
+            <source src={this.state.gameData?.videoIntro?.src} />
           </video>
         )}
 
@@ -89,28 +91,7 @@ class Main1Page extends Component {
                 }}
               >
                 <div className="frame"></div>
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="videoBox"
-                  onAbort={() => {
-                    console.log("Aborted");
-                  }}
-                  onPause={() => {
-                    console.log("Paused");
-                  }}
-                  onStalled={() => {
-                    console.log("Stalled");
-                  }}
-                  onSuspend={() => {
-                    console.log("Suspend");
-                  }}
-                  onWaiting={() => {
-                    console.log("Waiting");
-                  }}
-                >
+                <video autoPlay loop muted playsInline className="videoBox">
                   <source
                     src={this.state.game1.videoSource.src}
                     type="video/mp4"
