@@ -49,7 +49,7 @@ function onAppReadyHandler(app) {
         id: "TETRIS",
 
         // Перезагружать страницу после заданного количества игр
-        refreshAfter: 10,
+        refreshAfter: 1,
 
         // Показывать вместо заставки видео-ролик
         videoIntro: {

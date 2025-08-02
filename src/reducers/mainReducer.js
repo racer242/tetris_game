@@ -32,7 +32,7 @@ let mainReducerController = (state = {}, action) => {
           window.location.reload();
           return {
             ...state,
-            currentPage: "main",
+            currentPage: "empty",
           };
         }
       }
