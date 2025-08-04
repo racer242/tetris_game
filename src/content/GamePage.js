@@ -19,11 +19,13 @@ class GamePage extends Component {
   }
 
   componentDidMount() {
-    this.unsubscribe = this.store.subscribe(() => {
-      this.onStoreChange();
-    });
+    if (!this.mounted) {
+      this.unsubscribe = this.store.subscribe(() => {
+        this.onStoreChange();
+      });
+      this.startGame();
+    }
     this.mounted = true;
-    this.startGame();
   }
 
   componentWillUnmount() {
@@ -34,7 +36,9 @@ class GamePage extends Component {
     this.destroy();
   }
 
-  destroy() {}
+  destroy() {
+    this.input.destroy();
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {}
 

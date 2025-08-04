@@ -51,9 +51,33 @@ class TestPad extends Component {
       gameControl.off("disconnect");
       gameControl.on("connect", this.gamepadConnectedHandler);
       gameControl.on("disconnect", this.gamepadDisconnectedHandler);
+
+      this.unsubscribe = this.store.subscribe(() => {
+        this.onStoreChange();
+      });
     }
     this.mounted = true;
   }
+
+  componentWillUnmount() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+    this.mounted = false;
+    this.destroy();
+  }
+
+  onStoreChange() {
+    if (this.mounted) {
+      let state = this.store.getState();
+      this.setState({
+        ...this.state,
+        ...state,
+      });
+    }
+  }
+
+  destroy() {}
 
   updateState() {
     this.setState({
@@ -132,19 +156,27 @@ class TestPad extends Component {
 
     let pressedButtons = Object.keys(this.state.gamepadState.pressed).join(" ");
 
+    let topTen = this.state.storageData?.top ?? [];
+    let count = this.state.storageData?.count ?? {};
     return (
       <div className="testpad">
         <div className="pageBg"></div>
-        <div className="contentBox">
-          <div className="plate appear-top delay500ms">
-            <h1>Тест геймпада</h1>
-            <h2>
-              Состояние:{" "}
-              {this.state.gamepadState.connected ? "Подключен" : "Отключен"}
-            </h2>
-            <h2>Нажато: {pressedButtons}</h2>
-            <h2>Нажали: {this.state.gamepadState.down}</h2>
-            <h2>Отжали: {this.state.gamepadState.up}</h2>
+        <div className="contentBox" style={{ gap: 40 }}>
+          <div className="plate appear-top">
+            <div className="row">
+              <div className="column">
+                <h4>Тест геймпада</h4>
+              </div>
+              <div className="column">
+                <p>
+                  Состояние:{" "}
+                  {this.state.gamepadState.connected ? "Подключен" : "Отключен"}
+                </p>
+                <p>Нажато: {pressedButtons}</p>
+                <p>Нажали: {this.state.gamepadState.down}</p>
+                <p>Отжали: {this.state.gamepadState.up}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

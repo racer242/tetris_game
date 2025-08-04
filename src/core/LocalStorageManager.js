@@ -1,12 +1,11 @@
 class LocalStorageManager {
-
   constructor(props) {
-    this.name=props.name;
+    this.name = props.name;
   }
 
-  set(name,value) {
+  set(name, value) {
     // console.log("Set local storage variable: ",name,"to",value);
-    window.localStorage.setItem(name,value);
+    window.localStorage.setItem(name, value);
     return true;
   }
 
@@ -19,19 +18,17 @@ class LocalStorageManager {
   load() {
     // console.log("Load data from local storage.");
     let dataJson = window.localStorage.getItem(this.name);
-    dataJson=JSON.parse(dataJson);
-    return dataJson;
+    let data = JSON.parse(dataJson);
+    return data;
   }
 
   save(data) {
     // console.log("Save data from local storage.");
 
-    data=JSON.stringify(data);
+    data = JSON.stringify(data);
 
-    window.localStorage.setItem(this.name,data);
+    window.localStorage.setItem(this.name, data);
     return true;
   }
-
-
 }
 export default LocalStorageManager;

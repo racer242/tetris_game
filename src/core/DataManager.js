@@ -9,6 +9,11 @@ import {
 import LocalStorageManager from "./LocalStorageManager";
 import axios from "axios";
 import { LOAD_ERROR } from "../utils/texts";
+import {
+  getCurrentDateDDMMYYYY,
+  getCurrentDateTime,
+} from "../utils/stringTools";
+import { callLater } from "./helpers";
 
 class DataManager extends Component {
   constructor(props) {
@@ -22,11 +27,7 @@ class DataManager extends Component {
       this.state = {
         localStoreName: "local",
       };
-
     this.isLoading = false;
-    this.localStorageManager = new LocalStorageManager({
-      name: this.state.localStoreName,
-    });
   }
 
   /* ++++ React methods ++++ */
@@ -54,6 +55,13 @@ class DataManager extends Component {
         ...this.state,
         ...state,
       });
+
+      if (!this.localStorageManager) {
+        this.localStorageManager = new LocalStorageManager({
+          name: state.localStoreName,
+        });
+      }
+
       if (!this.isLoading) {
         if (state.requestStart) {
           console.log("DataManager requestStart");
@@ -65,7 +73,11 @@ class DataManager extends Component {
       }
       if (state.saveStorageData) {
         console.log("DataManager saveStorageData");
-        this.saveStorageData();
+        this.saveStorageData(state.saveStorageData);
+      }
+      if (state.loadStorageData) {
+        console.log("DataManager loadStorageData");
+        this.loadStorageData();
       }
     }
   }
@@ -91,14 +103,35 @@ class DataManager extends Component {
   }
 
   loadStorageData() {
-    let data = this.localStorageManager.load();
-    this.store.dispatch(setStorageData(data));
+    let storageData = this.localStorageManager.load();
+    this.store.dispatch(
+      setStoreData({
+        storageData,
+        loadStorageData: false,
+      })
+    );
   }
 
-  saveStorageData() {
-    // let state=this.store.getState();
-    this.localStorageManager.save({});
-    this.store.dispatch(storageDataSaved());
+  saveStorageData(data) {
+    let storage = this.localStorageManager.load() ?? {};
+    let top = storage.top ?? [];
+    top.push({ t: getCurrentDateTime(), s: data.score });
+    top.sort((a, b) => b.s - a.s);
+    if (top.length > 10) {
+      top = top.slice(0, 10);
+    }
+    let count = storage.count ?? {};
+    let date = getCurrentDateDDMMYYYY();
+    let games = count[date] ?? 0;
+    games++;
+    count[date] = games;
+    let result = { top, count };
+    this.localStorageManager.save(result);
+    this.store.dispatch(
+      setStoreData({
+        saveStorageData: null,
+      })
+    );
   }
 
   async load(source, data, headers, processId, dataId) {

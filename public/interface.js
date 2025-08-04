@@ -49,7 +49,7 @@ function onAppReadyHandler(app) {
         id: "TETRIS",
 
         // Перезагружать страницу после заданного количества игр
-        refreshAfter: 1,
+        refreshAfter: 10,
 
         // Показывать вместо заставки видео-ролик
         videoIntro: {
@@ -81,7 +81,7 @@ function onAppReadyHandler(app) {
 
         // Общая настройка звука
         soundParameters: {
-          volume: 0.5,
+          volume: 1,
         },
 
         // Использовать фоновую анимацию в принципе
@@ -127,9 +127,15 @@ function onAppReadyHandler(app) {
         nextScreenKey: "Space",
         nextScreenButton: "button0",
 
-        // Клавиша или кнопка для перехода на тестовый экран
+        // Клавиша для перехода на экран теста геймпада
         testScreenKey: "KeyT",
-        testScreenButton: "button1",
+
+        // Клавиша или кнопка для перехода на экран статистики
+        statsScreenKey: "KeyS",
+        statsScreenButton: "l1",
+
+        // Количество нажатий на клавишу для перехода к экрану статистики
+        statsScreenKeyPressCount: 10,
 
         // Клавиши или кнопки управления игрой
         leftKey: "ArrowLeft",

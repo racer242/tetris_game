@@ -31,15 +31,31 @@
   margin: 0;
 }
 
+.game h4 {
+  font-family: "MOSCOW2024";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 48px;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
 .game p {
   font-family: "MOSCOW2024";
   font-style: normal;
   font-weight: normal;
-  font-size: 44px;
-  line-height: 44px;
+  font-size: 24px;
+  line-height: 24px;
   text-align: left;
   padding: 0;
   margin: 0;
+}
+
+.game p.small {
+  font-size: 16px;
+  line-height: 16px;
 }
 
 .g1 .final-score {

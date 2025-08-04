@@ -4,6 +4,7 @@ import Main1Page from "../content/Main1Page";
 import TestPad from "../content/TestPad";
 import Animate from "../content/Animate";
 import SoundControl from "../components/SoundControl";
+import StatsPage from "../content/StatsPage";
 
 class PageStack extends Component {
   constructor(props) {
@@ -86,6 +87,10 @@ class PageStack extends Component {
 
         {this.state.currentPage === "test-pad" && (
           <TestPad bounds={this.props.bounds} store={this.store} />
+        )}
+
+        {this.state.currentPage === "stats" && (
+          <StatsPage bounds={this.props.bounds} store={this.store} />
         )}
 
         {this.state.currentPage === "empty" && <div />}

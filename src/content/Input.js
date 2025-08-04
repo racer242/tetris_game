@@ -64,7 +64,7 @@ class Input {
 
   registerAction(key, button, action, cycling) {
     this.keys[key] = action;
-    this.buttons[button] = { action, start: 0, step: 0, cycling };
+    if (button) this.buttons[button] = { action, start: 0, step: 0, cycling };
   }
 
   keyHandler(event) {

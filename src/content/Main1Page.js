@@ -12,10 +12,12 @@ class Main1Page extends Component {
       };
     } else this.state = {};
     this.soundControl = props.soundControl;
+    this.statsScreenKeyPressedCount = 0;
   }
 
   componentDidMount() {
     if (!this.mounted) {
+      this.statsScreenKeyPressedCount = 0;
       this.input = new Input();
       this.input.start();
       this.input.registerAction(
@@ -31,16 +33,32 @@ class Main1Page extends Component {
           this.destroy();
         }
       );
+      this.input.registerAction(this.state.gameData.testScreenKey, null, () => {
+        this.store.dispatch(
+          setStoreData({
+            currentPage: "test-pad",
+          })
+        );
+        this.destroy();
+      });
+
       this.input.registerAction(
-        this.state.gameData.testScreenKey,
-        this.state.gameData.testScreenButton,
+        this.state.gameData.statsScreenKey,
+        this.state.gameData.statsScreenButton,
         () => {
-          this.store.dispatch(
-            setStoreData({
-              currentPage: "test-pad",
-            })
-          );
-          this.destroy();
+          this.statsScreenKeyPressedCount++;
+          if (
+            this.statsScreenKeyPressedCount >=
+            this.state.gameData.statsScreenKeyPressCount
+          ) {
+            this.store.dispatch(
+              setStoreData({
+                currentPage: "stats",
+              })
+            );
+            this.statsScreenKeyPressedCount = 0;
+            this.destroy();
+          }
         }
       );
       this.soundControl.play("title");

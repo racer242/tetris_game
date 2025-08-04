@@ -5,6 +5,7 @@ import Tetris from "./Tetris";
 import Input from "./Input";
 import { setStoreData } from "../actions/appActions";
 import LineCollapse from "./LineCollapse";
+import { callLater } from "../core/helpers";
 
 class Game1Page extends GamePage {
   constructor(props) {
@@ -272,6 +273,15 @@ class Game1Page extends GamePage {
     if (gameOver) {
       this.soundControl.globalStop();
       this.soundControl.play("gameover");
+
+      callLater(() => {
+        this.store.dispatch(
+          setStoreData({
+            saveStorageData: { score: this.state.stats.score },
+          })
+        );
+      });
+
       this.restartTimeout = setTimeout(() => {
         this.store.dispatch(
           setStoreData({
