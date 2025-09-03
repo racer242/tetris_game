@@ -17,6 +17,9 @@ class Game1Page extends GamePage {
       isPaused: false,
       gameOver: false,
       isStarting: true,
+      countdown: null,
+      cdwnSec: "00",
+      cdwnMin: "00",
       collapses: [
         null,
         null,
@@ -66,12 +69,53 @@ class Game1Page extends GamePage {
     clearTimeout(this.startTimeout);
     clearTimeout(this.startHideTimeout);
     clearTimeout(this.startCountdownTimeout);
-
+    clearTimeout(this.countdownTimeout);
     this.tetris.reset();
   }
 
   updateState() {
     this.setState({ ...this.state, stats: this.stats });
+  }
+
+  startCountdown() {
+    if (this.state.gameData?.countdown?.show) {
+      this.countdownTimeout = setTimeout(() => {
+        const diff = this.updateCountdown();
+        this.updateState();
+        if (this.checkToContinueGame(diff)) {
+          this.startCountdown();
+        }
+      }, 500);
+    }
+  }
+
+  stopCountdown() {
+    clearTimeout(this.countdownTimeout);
+  }
+
+  updateCountdown() {
+    let diff = this.stats.countdown - Date.now();
+    if (diff < 0) diff = 0;
+    const cdwnMin = String(Math.floor(diff / 60000)).padStart(2, "0");
+    const cdwnSec = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
+
+    this.stats = {
+      ...this.stats,
+      cdwnMin,
+      cdwnSec,
+    };
+    // console.log("-----", cdwnMin, cdwnSec);
+
+    return diff;
+  }
+
+  checkToContinueGame(diff) {
+    if (diff == 0) {
+      this.tetris.pause();
+      this.gameOverHandler(true);
+      return false;
+    }
+    return true;
   }
 
   doStart() {
@@ -131,6 +175,7 @@ class Game1Page extends GamePage {
       () => {
         if (this.stats.isStarting || this.stats.isPaused) return;
         this.soundControl.globalStop();
+        this.stopCountdown();
         if (this.stats.gameOver) {
           this.store.dispatch(
             setStoreData({
@@ -199,6 +244,9 @@ class Game1Page extends GamePage {
           nextPuzzleType: -1,
           isPaused: false,
           gameOver: false,
+          countdown: new Date(
+            new Date() + this.state.gameData?.countdown?.value ?? 10000
+          ),
           collapses: [
             null,
             null,
@@ -225,11 +273,21 @@ class Game1Page extends GamePage {
         this.updateState();
         this.tetris.reset();
       }, 1000);
+
       this.startCountdownTimeout = setTimeout(() => {
         this.tetris.start();
         this.soundControl.play("music");
-        this.stats = { ...this.stats, isStarting: false };
+        this.stats = {
+          ...this.stats,
+          isStarting: false,
+          countdown: new Date(
+            new Date().getTime() + this.state.gameData?.countdown?.value ??
+              10000
+          ),
+        };
+        this.updateCountdown();
         this.updateState();
+        this.startCountdown();
       }, 3000);
     }, 100);
   }
@@ -268,9 +326,12 @@ class Game1Page extends GamePage {
 
   gameOverHandler(gameOver) {
     this.stats = { ...this.stats, gameOver };
+
     this.updateState();
 
     if (gameOver) {
+      this.stopCountdown();
+
       this.soundControl.globalStop();
       this.soundControl.play("gameover");
 
@@ -358,13 +419,29 @@ class Game1Page extends GamePage {
               style={{ opacity: this.state.stats.isStarting ? 0 : 1 }}
             >
               <div className="score-area">
-                <h3>{this.state.stats.score}</h3>
+                <h3
+                  className={
+                    this.state.gameData?.countdown?.show ? "small" : ""
+                  }
+                >
+                  {/* {1000000} */}
+                  {this.state.stats.score}
+                </h3>
               </div>
+
+              {this.state.gameData?.countdown?.show && (
+                <div className="countdown-area">
+                  <h3 className="small">{`${this.state.stats.cdwnMin}:${this.state.stats.cdwnSec}`}</h3>
+                </div>
+              )}
+
               {this.state.stats.nextPuzzleType >= 0 && (
                 <>
-                  <div className="next-title-area">
-                    <p>ДАЛЬШЕ:</p>
-                  </div>
+                  {!this.state.gameData?.countdown?.show && (
+                    <div className="next-title-area">
+                      <p>ДАЛЬШЕ:</p>
+                    </div>
+                  )}
                   <div
                     className="next-area"
                     style={{

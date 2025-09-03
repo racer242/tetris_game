@@ -87,6 +87,17 @@
   opacity: 0;
   transition: opacity 1000ms;
 }
+
+.g1 .countdown-area {
+  position: absolute;
+  display: block;
+  left: 340px;
+  top: 55px;
+  width: 335px;
+  height: 105px;
+  color: #fff;
+}
+
 .g1 .next-title-area {
   position: absolute;
   display: block;

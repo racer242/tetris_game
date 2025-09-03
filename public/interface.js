@@ -48,6 +48,12 @@ function onAppReadyHandler(app) {
       1: {
         id: "TETRIS",
 
+        // Показывать обратный отсчет игры. Таймер задается в миллисекундах
+        countdown: {
+          show: true,
+          value: 1 * 60 * 1000,
+        },
+
         // Перезагружать страницу после заданного количества игр
         refreshAfter: 10,
 
