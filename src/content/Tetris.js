@@ -92,13 +92,17 @@ class Tetris {
    * Pause
    */
   pause() {
-    if (this.puzzle == null) return;
+    if (this.puzzle == null) return false;
 
-    if (!this.puzzle.isRunning()) return;
+    if (!this.puzzle.isRunning()) {
+      return false;
+    }
+
     if (this.puzzle.fallDownID) clearTimeout(this.puzzle.fallDownID);
     clearTimeout(this.stats.timerId);
     this.paused = true;
     this.puzzle.running = false;
+    return true;
   }
 
   /**

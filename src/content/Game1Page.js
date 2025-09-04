@@ -93,8 +93,30 @@ class Game1Page extends GamePage {
     clearTimeout(this.countdownTimeout);
   }
 
+  pauseCountdown() {
+    this.stats.pausedOn = new Date();
+    clearTimeout(this.countdownTimeout);
+  }
+
+  resumeCountdown() {
+    if (this.state.gameData?.countdown?.show) {
+      this.countdownTimeout = setTimeout(() => {
+        this.stats.countdown = new Date(
+          this.stats.countdown.getTime() +
+            Date.now() -
+            this.stats.pausedOn.getTime()
+        );
+        const diff = this.updateCountdown();
+        this.updateState();
+        if (this.checkToContinueGame(diff)) {
+          this.startCountdown();
+        }
+      }, 100);
+    }
+  }
+
   updateCountdown() {
-    let diff = this.stats.countdown - Date.now();
+    let diff = this.stats.countdown.getTime() - Date.now();
     if (diff < 0) diff = 0;
     const cdwnMin = String(Math.floor(diff / 60000)).padStart(2, "0");
     const cdwnSec = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
@@ -202,13 +224,17 @@ class Game1Page extends GamePage {
           this.stats = { ...this.stats, isPaused: false };
           this.updateState();
           this.soundControl.play("music");
+          this.resumeCountdown();
+          this.soundControl.play("pause");
         } else {
-          this.tetris.pause();
-          this.stats = { ...this.stats, isPaused: true };
-          this.updateState();
-          this.soundControl.globalStop();
+          if (this.tetris.pause()) {
+            this.stats = { ...this.stats, isPaused: true };
+            this.updateState();
+            this.soundControl.globalStop();
+            this.pauseCountdown();
+            this.soundControl.play("pause");
+          }
         }
-        this.soundControl.play("pause");
       }
     );
 
